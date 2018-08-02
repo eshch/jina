@@ -1,9 +1,10 @@
 parser grammar EplParser;
 options { tokenVocab=EplLexer; }
 
-programFile: programText* EOF;
+programFile: Utf8ByteOrderMarker? programText* EOF;
 programText
-    : comment
+    : Separator
+    | comment
     ;
 
 comment: lineComment | blockComment;
