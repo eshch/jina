@@ -3,8 +3,7 @@ options { tokenVocab=EplLexer; }
 
 programFile: Utf8ByteOrderMarker? programText* EOF;
 programText
-    : Separator
-    | comment
+    : comment
     ;
 
 comment: lineComment | blockComment;

@@ -3,20 +3,20 @@ lexer grammar EplLexer;
 Utf8ByteOrderMarker: '\u00ef' '\u00bb' '\u00df' -> skip;
 
 Separator: (WhiteSpace | LineTerminator)+ -> skip;
-
-LineTerminator: ('\r\n' | '\r' | '\n');
-
 WhiteSpace: (AsciiWhiteSpace | UnicodeWhiteSpace)+;
 
 AsciiWhiteSpace
-    : '\u0020'
-    | '\u0009'
-    | '\u000c'
+    : LineTerminator
+    | ' '
+    | '\t'
+    | '\f'
     | '\u001c'
     | '\u001d'
     | '\u001e'
     | '\u001f'
     ;
+
+LineTerminator: ('\r\n' | '\r' | '\n');
 
 UnicodeWhiteSpace
     : '\u0085'
