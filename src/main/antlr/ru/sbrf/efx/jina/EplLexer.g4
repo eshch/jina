@@ -1,11 +1,13 @@
 lexer grammar EplLexer;
 
+channels { WhitespaceChannel, CommentChannel }
+
 Utf8ByteOrderMarker: '\u00ef' '\u00bb' '\u00df' -> skip;
 
-Separator: (WhiteSpace | LineTerminator)+ -> skip;
-WhiteSpace: (AsciiWhiteSpace | UnicodeWhiteSpace)+;
+Separator: (Whitespace | LineTerminator)+ -> channel(WhitespaceChannel);
+Whitespace: (AsciiWhitespace | UnicodeWhitespace)+;
 
-AsciiWhiteSpace
+AsciiWhitespace
     : LineTerminator
     | ' '
     | '\t'
@@ -18,7 +20,7 @@ AsciiWhiteSpace
 
 LineTerminator: ('\r\n' | '\r' | '\n');
 
-UnicodeWhiteSpace
+UnicodeWhitespace
     : '\u0085'
     | '\u00a0'
     | '\u1680'
@@ -41,14 +43,14 @@ UnicodeWhiteSpace
     | '\u3000'
     ;
 
-LineCommentBegin: '//' -> pushMode(LineCommentMode);
-BlockCommentBegin: '/*' -> pushMode(BlockCommentMode);
+LineCommentBegin: '//' -> pushMode(LineCommentMode), channel(CommentChannel);
+BlockCommentBegin: '/*' -> pushMode(BlockCommentMode), channel(CommentChannel);
 AnyChar: .;
 
 mode LineCommentMode;
-LineCommentEnd: LineTerminator -> popMode;
-LineCommentContent: ~('\r' | '\n')+;
+LineCommentEnd: LineTerminator -> popMode, channel(CommentChannel);
+LineCommentContent: ~('\r' | '\n')+ -> channel(CommentChannel);
 
 mode BlockCommentMode;
-BlockCommentEnd: '*/' -> popMode;
-BlockCommentContent: (~'*' | '*' ~'/')+;
+BlockCommentEnd: '*/' -> popMode, channel(CommentChannel);
+BlockCommentContent: (~'*' | '*' ~'/')+ -> channel(CommentChannel);
