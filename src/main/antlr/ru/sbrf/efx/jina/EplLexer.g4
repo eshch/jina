@@ -45,6 +45,25 @@ UnicodeWhitespace
 
 LineCommentBegin: '//' -> pushMode(LineCommentMode), channel(CommentChannel);
 BlockCommentBegin: '/*' -> pushMode(BlockCommentMode), channel(CommentChannel);
+
+Package: 'package';
+Using: 'using';
+Dot: '.';
+Semicolon: ';';
+
+Identifier: Word Wordnum*;
+
+Digit10S: Digit10+;
+Digit16S: Digit16+;
+StringLiteralChar: ~'\\' | '\\' [\\"tn];
+
+fragment Alpha: [A-Za-z];
+fragment Digit10: [0-9];
+fragment Digit16: [0-9A-Fa-f];
+fragment Word: Alpha | '_' | '$';
+fragment Wordnum: Word | Digit10;
+fragment Alnumic: Alpha | Digit10;
+
 AnyChar: .;
 
 mode LineCommentMode;
