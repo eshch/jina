@@ -1,16 +1,27 @@
 parser grammar EplParser;
 options { tokenVocab=EplLexer; }
 
+comment: lineComment | blockComment;
+lineComment: LineCommentBegin LineCommentContent? LineCommentEnd?;
+blockComment: BlockCommentBegin BlockCommentContent? BlockCommentEnd;
+
 programFile: Utf8ByteOrderMarker? programText EOF;
-programText: packageDeclaration? usingDeclaration*;
+programText:
+    packageDeclaration?
+    usingDeclaration*
+    (eventDefinition /*| monitorDefinition | customAggregateDefinition*/)*
+    ;
 
 packageDeclaration: Package Identifier (Dot Identifier)* Semicolon;
 usingDeclaration: Using Identifier (Dot Identifier)* Semicolon;
+eventDefinition: Event Identifier OpenBrace eventMemberDefinition* CloseBrace;
+eventMemberDefinition: eventFieldDefinition | eventActionDefinition;
 
-comment: lineComment | blockComment;
+dataTypeDefinition: Identifier;
 
-lineComment: LineCommentBegin lineCommentContent LineCommentEnd?;
-lineCommentContent: LineCommentContent?;
+eventFieldDefinition: Wildcard? dataTypeDefinition Identifier Semicolon;
 
-blockComment: BlockCommentBegin blockCommentContent BlockCommentEnd;
-blockCommentContent: BlockCommentContent?;
+eventActionDefinition: Action Identifier parametersDefinition? (Returns dataTypeDefinition)? block;
+parametersDefinition: OpenParen (parameterDefinition (Comma parameterDefinition)*)? CloseParen;
+parameterDefinition: dataTypeDefinition Identifier;
+block: OpenBrace CloseBrace;
