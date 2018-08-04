@@ -45,8 +45,30 @@ UnicodeWhitespace
 LineCommentBegin: '//' -> pushMode(LineCommentMode), channel(CommentChannel);
 BlockCommentBegin: '/*' -> pushMode(BlockCommentMode), channel(CommentChannel);
 
+OpenBrace: '{';
+CloseBrace: '}';
+OpenBracket: '[';
+CloseBracket: ']';
+OpenParen: '(';
+CloseParen: ')';
 Dot: '.';
 Semicolon: ';';
+Comma: ',';
+Colon: ':';
+Plus: '+';
+Minus: '-';
+Mult: '*';
+Div: '/';
+Mod: '%';
+Lshift: '<<';
+Rshift: '>>';
+Assign: ':=';
+Eq: '=';
+Neq: '!=';
+Lt: '<';
+Gt: '>';
+Le: '<=';
+Ge: '=>';
 Hash: '#';
 
 Action: 'action';
