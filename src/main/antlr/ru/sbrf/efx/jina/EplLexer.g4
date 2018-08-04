@@ -4,8 +4,9 @@ channels { WhitespaceChannel, CommentChannel }
 
 Utf8ByteOrderMarker: '\u00ef' '\u00bb' '\u00df' -> skip;
 
-Separator: (Whitespace | LineTerminator)+ -> channel(WhitespaceChannel);
-Whitespace: (AsciiWhitespace | UnicodeWhitespace)+;
+Whitespace: (AsciiWhitespace | UnicodeWhitespace)+ -> channel(WhitespaceChannel);
+
+LineTerminator: ('\r\n' | '\r' | '\n');
 
 AsciiWhitespace
     : LineTerminator
@@ -17,8 +18,6 @@ AsciiWhitespace
     | '\u001e'
     | '\u001f'
     ;
-
-LineTerminator: ('\r\n' | '\r' | '\n');
 
 UnicodeWhitespace
     : '\u0085'
