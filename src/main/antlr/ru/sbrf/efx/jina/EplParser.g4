@@ -1,4 +1,5 @@
 parser grammar EplParser;
+
 options { tokenVocab=EplLexer; }
 
 comment: lineComment | blockComment;
@@ -17,11 +18,26 @@ usingDeclaration: Using Identifier (Dot Identifier)* Semicolon;
 eventDefinition: Event Identifier OpenBrace eventMemberDefinition* CloseBrace;
 eventMemberDefinition: eventFieldDefinition | eventActionDefinition;
 
-dataTypeDefinition: Identifier;
+dataType
+    : Boolean # boolean
+    | Decimal # decimal
+    | Float # float
+    | Integer # integer
+    | String # string
+    | Action Lt dataType (Comma dataType)* Gt (Returns dataType)? # action
+    | Chunk # chunk
+    | Context # context
+    | Dictionary Lt dataType Comma dataType Gt # dictionary
+    | Identifier # event
+    | Listener # listener
+    | Location # location
+    | Sequence Lt dataType Gt # sequence
+    | Stream Lt dataType Gt # stream
+    ;
 
-eventFieldDefinition: Wildcard? dataTypeDefinition Identifier Semicolon;
+eventFieldDefinition: Wildcard? dataType Identifier Semicolon;
 
-eventActionDefinition: Action Identifier parametersDefinition? (Returns dataTypeDefinition)? block;
+eventActionDefinition: Action Identifier parametersDefinition? (Returns dataType)? block;
 parametersDefinition: OpenParen (parameterDefinition (Comma parameterDefinition)*)? CloseParen;
-parameterDefinition: dataTypeDefinition Identifier;
+parameterDefinition: dataType Identifier;
 block: OpenBrace CloseBrace;
