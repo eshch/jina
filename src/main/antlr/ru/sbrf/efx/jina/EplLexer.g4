@@ -71,6 +71,9 @@ Le: '<=';
 Ge: '=>';
 Hash: '#';
 
+// Below it's a group of special words but not keywords we need to escape for usage as an identifier.
+Listener: 'listener';
+
 Action: 'action';
 Aggregate: 'aggregate';
 All: 'all';
@@ -102,7 +105,6 @@ If: 'if';
 Import: 'import';
 In: 'in';
 Integer: 'integer';
-Listener: 'listener';
 Location: 'location';
 Log: 'log';
 Monitor: 'monitor';
