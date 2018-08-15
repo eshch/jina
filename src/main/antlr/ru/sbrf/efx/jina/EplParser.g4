@@ -81,7 +81,7 @@ returnStatement: Return expression? Semicolon;
 expression: Identifier; // TODO: replace stub
 variableDefinition: dataType Identifier Semicolon; // TODO: initializer
 
-actionCall: Identifier Semicolon;
+actionCall: Identifier (OpenParen CloseParen)? Semicolon; // TODO: parameters
 
 eventExpression
     : OpenParen eventExpression CloseParen
