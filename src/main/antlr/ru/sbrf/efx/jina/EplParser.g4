@@ -83,4 +83,49 @@ variableDefinition: dataType Identifier Semicolon; // TODO: initializer
 
 actionCall: Identifier Semicolon;
 
-eventExpression: Identifier; // TODO: replace stub
+eventExpression
+    : (Unmatched | Completed)? eventTemplate
+    | timer
+    | OpenParen eventExpression CloseParen
+    ;
+
+eventTemplate: Identifier OpenParen eventFilter? CloseParen Colon Identifier;
+eventFilter
+    : positionEventQualifierList
+    | namedEventQualifierList
+    | positionEventQualifierList Comma namedEventQualifierList
+    ;
+positionEventQualifierList: positionEventQualifier (Comma positionEventQualifier)*;
+positionEventQualifier
+    : Wildcard
+    | rangeExpression
+    | (Lt | Le | Gt | Ge | Eq)? expression
+    ;
+namedEventQualifierList: namedEventQualifier (Comma namedEventQualifier);
+namedEventQualifier
+    : Identifier
+    ( Eq Wildcard
+    | (Lt | Le | Gt | Ge | Eq) expression
+    | In rangeExpression
+    )
+    ;
+rangeExpression: (OpenParen | OpenBrace) expression Colon expression (CloseParen | CloseBrace);
+
+timer
+    : Wait OpenParen expression CloseParen
+    | At OpenParen atTimes CloseParen
+    | eventExpression Within OpenParen expression CloseParen
+    ;
+
+atTimes: (atExpression Comma){4} atExpression (Comma atExpression)?;
+atExpression
+    : atPrimary
+    | atList
+    ;
+atPrimary
+    : Wildcard
+    | Wildcard Div expression
+    | expression Colon expression
+    | expression
+    ;
+atList: OpenBrace atPrimary (Comma atPrimary)* CloseBrace;
