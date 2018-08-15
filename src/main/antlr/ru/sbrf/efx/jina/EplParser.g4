@@ -40,4 +40,47 @@ eventFieldDefinition: Wildcard? dataType Identifier Semicolon;
 eventActionDefinition: Action Identifier parametersDefinition? (Returns dataType)? block;
 parametersDefinition: OpenParen (parameterDefinition (Comma parameterDefinition)*)? CloseParen;
 parameterDefinition: dataType Identifier;
-block: OpenBrace CloseBrace;
+block: OpenBrace statement* CloseBrace;
+
+statement
+    : expression
+    | variableDefinition
+    | emitStatement
+    | enqueueStatement
+    | logStatement
+    | printStatement
+    | routeStatement
+    | spawnStatement
+    | forStatement
+    | fromStatement
+    | ifStatement
+    | onStatement
+    | whileStatement
+    | breakStatement
+    | continueStatement
+    | dieStatement
+    | returnStatement
+    ;
+
+emitStatement: Emit expression To expression Semicolon;
+enqueueStatement: Enqueue expression (To expression)? Semicolon;
+logStatement: Log expression (At Identifier)? Semicolon;
+printStatement: Print expression Semicolon;
+routeStatement: Route expression Semicolon;
+spawnStatement: Spawn actionCall (To expression)? Semicolon;
+forStatement: For Identifier In expression block;
+fromStatement: From /* stream grammar island */ Semicolon;
+ifStatement: If expression Then block (Else (block | ifStatement))?;
+onStatement: On eventExpression statement;
+whileStatement: While expression block;
+breakStatement: Break Semicolon;
+continueStatement: Continue Semicolon;
+dieStatement: Die Semicolon;
+returnStatement: Return expression? Semicolon;
+
+expression: Identifier; // TODO: replace stub
+variableDefinition: dataType Identifier Semicolon; // TODO: initializer
+
+actionCall: Identifier Semicolon;
+
+eventExpression: Identifier; // TODO: replace stub
