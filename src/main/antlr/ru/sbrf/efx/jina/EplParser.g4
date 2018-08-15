@@ -84,9 +84,11 @@ variableDefinition: dataType Identifier Semicolon; // TODO: initializer
 actionCall: Identifier Semicolon;
 
 eventExpression
-    : (Unmatched | Completed)? eventTemplate
-    | timer
-    | OpenParen eventExpression CloseParen
+    : OpenParen eventExpression CloseParen
+    | (Unmatched | Completed)? eventTemplate
+    | eventExpression Within OpenParen expression CloseParen
+    | Wait OpenParen expression CloseParen
+    | At OpenParen atTimes CloseParen
     ;
 
 eventTemplate: Identifier OpenParen eventFilter? CloseParen Colon Identifier;
@@ -110,12 +112,6 @@ namedEventQualifier
     )
     ;
 rangeExpression: (OpenParen | OpenBrace) expression Colon expression (CloseParen | CloseBrace);
-
-timer
-    : Wait OpenParen expression CloseParen
-    | At OpenParen atTimes CloseParen
-    | eventExpression Within OpenParen expression CloseParen
-    ;
 
 atTimes: (atExpression Comma){4} atExpression (Comma atExpression)?;
 atExpression
