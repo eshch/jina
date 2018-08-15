@@ -136,7 +136,7 @@ Wildcard: 'wildcard';
 Within: 'within';
 Xor: 'xor';
 
-CommonKeyword
+CommonReservedKeyword
     : Action
     | Aggregate
     | All
@@ -214,7 +214,7 @@ Unique: 'unique';
 Where: 'where';
 With: 'with';
 
-StreamKeyword
+StreamReservedKeyword
     : By
     | Every
     | Group
@@ -231,7 +231,7 @@ StreamKeyword
     | With
     ;
 
-CommonJustReserved
+CommonReservedWord
     : 'abstract'
     | 'assert'
     | 'bignum'
@@ -275,7 +275,7 @@ CommonJustReserved
     | 'window'
     ;
 
-StreamJustReserved
+StreamReservedWord
     : 'ALL'
     | 'AND'
     | 'BY'
@@ -301,9 +301,9 @@ StreamJustReserved
     | 'WITHIN'
     ;
 
-Reserved: Keyword | JustReserved;
-Keyword: CommonKeyword | StreamKeyword;
-JustReserved: CommonJustReserved | StreamJustReserved;
+Reserved: ReservedKeyword | ReservedWord;
+ReservedKeyword: CommonReservedKeyword | StreamReservedKeyword;
+ReservedWord: CommonReservedWord | StreamReservedWord;
 
 Identifier: EscapedReserved | JustIdentifier;
 EscapedReserved: Hash Reserved;
