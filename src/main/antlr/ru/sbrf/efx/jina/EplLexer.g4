@@ -73,6 +73,7 @@ Hash: '#';
 
 // Below it's a group of special words but not keywords we need to escape for usage as an identifier.
 Listener: 'listener';
+Unmatched: 'unmatched';
 
 Action: 'action';
 Aggregate: 'aggregate';
