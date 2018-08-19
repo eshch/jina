@@ -79,7 +79,7 @@ dieStatement: Die Semicolon;
 returnStatement: Return expression? Semicolon;
 
 expression: Identifier; // TODO: replace stub
-variableDefinition: dataType Identifier Semicolon; // TODO: initializer
+variableDefinition: dataType Identifier (Assign expression)? Semicolon;
 
 actionCall: Identifier argumentList? Semicolon;
 argumentList: OpenParen (expression (Comma expression)*)? CloseParen;
