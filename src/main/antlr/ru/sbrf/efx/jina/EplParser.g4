@@ -43,7 +43,8 @@ parameterDefinition: dataType Identifier;
 block: OpenBrace statement* CloseBrace;
 
 statement
-    : expression
+    : expressionStatement
+    | assignStatement
     | variableDefinition
     | emitStatement
     | enqueueStatement
@@ -62,6 +63,8 @@ statement
     | returnStatement
     ;
 
+expressionStatement: expression Semicolon;
+assignStatement: Identifier Semicolon; // TODO: replace stub
 emitStatement: Emit expression To expression Semicolon;
 enqueueStatement: Enqueue expression (To expression)? Semicolon;
 logStatement: Log expression (At Identifier)? Semicolon;
