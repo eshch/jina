@@ -69,7 +69,7 @@ printStatement: Print expression Semicolon;
 routeStatement: Route expression Semicolon;
 spawnStatement: Spawn actionCall (To expression)? Semicolon;
 forStatement: For Identifier In expression block;
-fromStatement: From /* stream grammar island */ Semicolon;
+fromStatement: From /* stream grammar island */ Semicolon; // TODO: stream grammar
 ifStatement: If expression Then block (Else (block | ifStatement))?;
 onStatement: On eventExpression statement;
 whileStatement: While expression block;
